@@ -21,6 +21,12 @@ header {
   column-gap: normal;
 }
 
+.titlecont h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 #note {
   width: 100%;
   min-height: 66%;
@@ -34,3 +40,4 @@ header {
   top: 10%;
   
 }
+
