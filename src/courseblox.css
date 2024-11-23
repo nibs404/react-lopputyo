@@ -1,4 +1,4 @@
-.notes-container {
+.course-container {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -6,17 +6,13 @@
     justify-content: center;
   }
   
-  .note-box {
+  .course-box {
     background-color: #ffff99; 
     border: 2px solid yellow; 
     border-radius: 10px;
     padding: 1rem; 
     width: 200px; 
-    min-height: 100px;
+    min-height: 20pxpx;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
     text-align: center; 
-  }
-
-  p {
-    color: black;
   }
