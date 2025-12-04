@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react';
 import './courseblox.css';
 
-function CBlox({ showDelete = false }) {
+function CBlox({ showDelete = false, courses: passedCourses }) {
   const [courses, setCourse] = useState([]);
-
+  // && passedCourses.length > 0)
   useEffect(() => {
+
+    if (Array.isArray(passedCourses))  {
+      setCourse(passedCourses);
+      return;
+    }
+  }, [passedCourses]);
+  
+    useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await fetch(
