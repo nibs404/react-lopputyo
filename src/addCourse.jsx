@@ -6,7 +6,7 @@ function AddCourse() {
   return (
     <>
       
-        <CBlox />
+        <CBlox showDelete={true} />
         <br />
         <button>Add A Course +</button>
 

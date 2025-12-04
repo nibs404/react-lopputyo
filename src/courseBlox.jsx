@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './courseblox.css';
 
-function CBlox() {
+function CBlox({ showDelete = false }) {
   const [courses, setCourse] = useState([]);
 
   useEffect(() => {
@@ -22,6 +22,10 @@ function CBlox() {
     fetchCourse();
   }, []);
 
+  const handleDelete = (id) => {
+    setCourse(prev => prev.filter(course => course.id !== id));
+  };
+
   return (
     <div className="course-container">
       {courses.length === 0 ? (
@@ -30,7 +34,8 @@ function CBlox() {
         courses.map((course) => (
           <div className="course-box" key={course.id}>
             <p>Course: {course.name}</p>
-            <button>X Delete</button>
+            {showDelete && (<button className="deletebtn" onClick={()=>handleDelete(course.id)}>
+              X delete</button>)}
           </div>
         ))
       )}
