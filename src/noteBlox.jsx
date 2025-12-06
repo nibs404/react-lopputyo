@@ -3,6 +3,7 @@ import './noteblox.css';
 
 function Blox() {
   const [notes, setNotes] = useState([]);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -22,6 +23,30 @@ function Blox() {
     fetchNotes();
   }, []);
 
+  useEffect(() => {
+    const localNotes = JSON.parse(localStorage.getItem("notes") || "[]");
+  
+    if (localNotes.length > 0) {
+      setNotes(previous => [...previous, ...localNotes]);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const res = await fetch(
+        'https://luentomuistiinpano-api.netlify.app/.netlify/functions/courses'
+      );
+      const data = await res.json();
+      setCourses(data || []);
+    };
+    fetchCourses();
+  }, []);
+
+  const findCourseName = (id) => {
+    const course = courses.find(c => c.id === id);
+    return course ? course.name : "Unknown course";
+  };
+
   return (
     <div className="notes-container">
       {notes.length === 0 ? (
@@ -29,7 +54,13 @@ function Blox() {
       ) : (
         notes.map((note) => (
           <div className="note-box" key={note.id}>
-            <p>Course: {note.course.name}</p>
+            <p>
+              Course:{" "}
+              {note.course
+                ? note.course.name             // API:n formatointi
+                : findCourseName(note.courseId) // LocalStorage formatointi
+              }
+            </p>
             <p>Text: {note.text}</p>
             <p>Time: {note.timestamp}</p>
           </div>

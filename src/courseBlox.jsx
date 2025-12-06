@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import './courseblox.css';
 
-function CBlox({ showDelete = false, courses: passedCourses }) {
+function CBlox({ showDelete = false, courses: passedCourses, onCourseClick, selectedCourseId }) {
   const [courses, setCourse] = useState([]);
   // && passedCourses.length > 0)
   useEffect(() => {
 
     if (Array.isArray(passedCourses))  {
       setCourse(passedCourses);
-      return;
+      // return;
     }
   }, [passedCourses]);
   
@@ -40,9 +40,9 @@ function CBlox({ showDelete = false, courses: passedCourses }) {
         <p>No courses to display yet!</p>
       ) : (
         courses.map((course) => (
-          <div className="course-box" key={course.id}>
+          <div className={`course-box ${selectedCourseId === course.id ? "selected-course" : ""}`} key={course.id} onClick={()=>onCourseClick && onCourseClick(course)}>
             <p>Course: {course.name}</p>
-            {showDelete && (<button className="deletebtn" onClick={()=>handleDelete(course.id)}>
+            {showDelete && (<button className="deletebtn" onClick={(e)=> {e.stopPropagation(); handleDelete(course.id)}}>
               X delete</button>)}
           </div>
         ))
