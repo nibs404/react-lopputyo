@@ -21,9 +21,10 @@ function App() {
     }
   };
 
-  const clearLocalNotes = () => {
+  const clearLocalStorage = () => {
     localStorage.removeItem("notes");
-    alert("Local notes cleared!");
+    localStorage.removeItem("courses");
+    alert("Local storage cleared!");
     window.location.reload();
   };
 
@@ -40,7 +41,7 @@ function App() {
         <button onClick={() => setActiveComponent('addNote')}>Add Note</button>
         <button onClick={() => setActiveComponent('addCourse')}>Add Course</button>
         <button onClick={() => setActiveComponent('allNotes')}>All Notes</button>
-        <button onClick={clearLocalNotes} style={{ backgroundColor: "red", border: "2px solid black" }} >!clear local notes!</button>
+        <button onClick={clearLocalStorage} style={{ backgroundColor: "red", border: "2px solid black" }} >!clear local storage!</button>
       </div>
     </header>
     <main>{renderComponent()}</main>

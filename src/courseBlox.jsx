@@ -12,26 +12,28 @@ function CBlox({ showDelete = false, courses: passedCourses, onCourseClick, sele
     }
   }, [passedCourses]);
   
-    useEffect(() => {
-    const fetchCourse = async () => {
-      try {
-        const response = await fetch(
-          'https://luentomuistiinpano-api.netlify.app/.netlify/functions/courses'
-        );
-        const data = await response.json();
+  useEffect(() => {
+    const fetchCourses = async () => {
+  
+      const res = await fetch(
+        'https://luentomuistiinpano-api.netlify.app/.netlify/functions/courses'
+      );
+      const apiData = await res.json();
+  
+      const stored = JSON.parse(localStorage.getItem("courses") || "[]");
+  
 
-        setCourse(data || []);
-      } 
-      catch (error) {
-        console.error("Error finding courses:", error);
-      }
+      setCourses([...apiData, ...stored]);
     };
-
-    fetchCourse();
+  
+    fetchCourses();
   }, []);
 
   const handleDelete = (id) => {
     setCourse(prev => prev.filter(course => course.id !== id));
+    const stored = JSON.parse(localStorage.getItem("courses") || "[]");
+    const updated = stored.filter(c => c.id !== id);
+    localStorage.setItem("courses", JSON.stringify(updated));
   };
 
   return (

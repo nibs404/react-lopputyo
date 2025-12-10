@@ -7,14 +7,20 @@ function AddCourse() {
   const [newCourseName, setNewCourseName] = useState("");
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchCourses = async () => {
+  
       const res = await fetch(
         'https://luentomuistiinpano-api.netlify.app/.netlify/functions/courses'
       );
-      const data = await res.json();
-      setCourses(data || []);
+      const apiData = await res.json();
+  
+      const stored = JSON.parse(localStorage.getItem("courses") || "[]");
+  
+
+      setCourses([...apiData, ...stored]);
     };
-    fetchCourse();
+  
+    fetchCourses();
   }, []);
 
   const handleAddCourse = () => {
@@ -26,6 +32,8 @@ function AddCourse() {
     };
 
     setCourses(prev => [...prev, newCourse]);
+    const stored = JSON.parse(localStorage.getItem("courses") || "[]");
+    localStorage.setItem("courses", JSON.stringify([...stored, newCourse]));
     setNewCourseName("");
     setShowForm(false);
   };

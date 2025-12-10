@@ -37,7 +37,8 @@ function Blox() {
         'https://luentomuistiinpano-api.netlify.app/.netlify/functions/courses'
       );
       const data = await res.json();
-      setCourses(data || []);
+      const stored = JSON.parse(localStorage.getItem("courses")||"[]");
+      setCourses([...data, ...stored]);
     };
     fetchCourses();
   }, []);

@@ -9,14 +9,20 @@ function AddNote() {
   const [noteText, setNoteText] = useState("");
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchCourses = async () => {
+  
       const res = await fetch(
         'https://luentomuistiinpano-api.netlify.app/.netlify/functions/courses'
       );
-      const data = await res.json();
-      setCourses(data||[]);
+      const apiData = await res.json();
+  
+      const stored = JSON.parse(localStorage.getItem("courses") || "[]");
+  
+
+      setCourses([...apiData, ...stored]);
     };
-    fetchCourse();
+  
+    fetchCourses();
   }, []);
 
   const saveNote = () => {
@@ -56,6 +62,7 @@ function AddNote() {
         selectedCourseId={selectedCourse?.id}
         onCourseClick={(course)=> setSelectedCourse(course)}
         />
+        <br />
         <textarea
         name="muistiinpano_kenttä"
         id="note"

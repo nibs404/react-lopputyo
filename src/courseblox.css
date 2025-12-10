@@ -4,6 +4,7 @@
     gap: 1rem;
     margin-top: 2rem;
     justify-content: center;
+    max-width: 1200px;
   }
   
   .course-box {
